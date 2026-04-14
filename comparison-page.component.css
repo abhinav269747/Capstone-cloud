@@ -1,0 +1,606 @@
+/* ── Comparison Page ────────────────────────────────────────── */
+
+:host {
+  --rlpa: #006d5b;
+  --rlpa-soft: rgba(0, 109, 91, 0.09);
+  --rlpa-mid: rgba(0, 109, 91, 0.22);
+  --challenger: #b05a10;
+  --challenger-soft: rgba(176, 90, 16, 0.09);
+  --challenger-mid: rgba(176, 90, 16, 0.22);
+  --tie: rgba(22, 33, 28, 0.08);
+  --line: rgba(22, 33, 28, 0.11);
+  --ink: #16211c;
+  --muted: #5e685f;
+  --panel: rgba(255, 250, 242, 0.82);
+  display: block;
+}
+
+.comparison-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Page hero ──────────────────────────────────────────────── */
+.page-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--rlpa);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 0.96;
+  margin: 0 0 10px;
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 0;
+  max-width: 48ch;
+}
+
+/* ── Controls card ──────────────────────────────────────────── */
+.controls-card {
+  padding: 20px 24px;
+}
+
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.88rem;
+}
+
+input,
+select {
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  padding: 9px 11px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+input:disabled {
+  opacity: 0.55;
+}
+
+.run-btn {
+  width: 100%;
+}
+
+button.primary {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 14px;
+  background: linear-gradient(135deg, #0f7b67, #004b41);
+  color: #fff8ee;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Panel base ─────────────────────────────────────────────── */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+}
+
+/* ── Error ──────────────────────────────────────────────────── */
+.error-banner {
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(159, 60, 47, 0.12);
+  color: #9f3c2f;
+  margin: 0;
+}
+
+/* ── Score banner ───────────────────────────────────────────── */
+.score-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 28px 32px;
+  text-align: center;
+}
+
+.score-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.score-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0;
+}
+
+.score-num {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 0;
+}
+
+.score-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.score-block.rlpa-side .score-num {
+  color: var(--rlpa);
+}
+
+.score-block.challenger-side .score-num {
+  color: var(--challenger);
+}
+
+.score-vs {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* ── Bar chart ──────────────────────────────────────────────── */
+.chart-section {
+  padding: 24px;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.chart-note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 8px;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.rlpa-dot {
+  background: var(--rlpa);
+}
+
+.challenger-dot {
+  background: var(--challenger);
+}
+
+/* ── CSS grouped bar chart ─────────────────────────────────── */
+.css-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.css-bar-group {
+  flex: 1;
+  min-width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.css-bars-area {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  height: 185px;
+  width: 100%;
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 0;
+}
+
+.css-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.css-bar {
+  width: 20px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.45s cubic-bezier(.4,0,.2,1);
+  opacity: 0.82;
+}
+
+.css-bar.winner-bar {
+  opacity: 1;
+}
+
+.rlpa-bar {
+  background: var(--rlpa);
+}
+
+.challenger-bar {
+  background: var(--challenger);
+}
+
+.css-val {
+  font-size: 7px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  max-width: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.rlpa-text { color: var(--rlpa); }
+.challenger-text { color: var(--challenger); }
+
+.css-xlabel {
+  font-size: 0.6rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 6px;
+  line-height: 1.3;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 72px;
+}
+
+/* ── Side-by-side metric rows ───────────────────────────────── */
+.metric-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.metric-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.metric-row.rlpa-win-row {
+  border-left: 4px solid var(--rlpa);
+}
+
+.metric-row.challenger-win-row {
+  border-left: 4px solid var(--challenger);
+}
+
+/* Side cells */
+.side {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+}
+
+.side.rlpa-side {
+  background: var(--rlpa-soft);
+  border-right: 1px solid var(--line);
+}
+
+.side.challenger-side {
+  background: var(--challenger-soft);
+  border-left: 1px solid var(--line);
+}
+
+.side-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0;
+}
+
+.side-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.side-value.winner-value {
+  color: var(--rlpa);
+}
+
+.challenger-side .side-value.winner-value {
+  color: var(--challenger);
+}
+
+/* Centre cell */
+.metric-centre {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+}
+
+.metric-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.delta-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.delta-badge.rlpa-badge {
+  background: var(--rlpa-mid);
+}
+
+.delta-badge.challenger-badge {
+  background: var(--challenger-mid);
+}
+
+.delta-badge.tie-badge {
+  background: var(--tie);
+}
+
+.winner-chip {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.rlpa-badge .winner-chip {
+  color: var(--rlpa);
+}
+
+.challenger-badge .winner-chip {
+  color: var(--challenger);
+}
+
+.delta-val {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.diff-sentence {
+  font-size: 0.82rem;
+  color: var(--ink);
+  margin: 0;
+  max-width: 38ch;
+}
+
+.metric-insight {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Sparkline / hbar grid ──────────────────────────────────── */
+.spark-section {
+  padding: 24px;
+}
+
+.spark-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.spark-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: rgba(255, 248, 237, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spark-card.rlpa-win-card {
+  border-left: 4px solid var(--rlpa);
+}
+
+.spark-card.challenger-win-card {
+  border-left: 4px solid var(--challenger);
+}
+
+.spark-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+
+.spark-metric-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.winner-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.rlpa-tag {
+  background: var(--rlpa-mid);
+  color: var(--rlpa);
+}
+
+.challenger-tag {
+  background: var(--challenger-mid);
+  color: var(--challenger);
+}
+
+.tie-tag {
+  background: var(--tie);
+  color: var(--muted);
+}
+
+/* Horizontal bars */
+.hbar-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hbar-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hbar-algo {
+  font-size: 0.72rem;
+  width: 70px;
+  flex-shrink: 0;
+  color: var(--muted);
+  text-align: right;
+}
+
+.hbar-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(22, 33, 28, 0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.hbar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.rlpa-fill {
+  background: var(--rlpa);
+  opacity: 0.8;
+}
+
+.challenger-fill {
+  background: var(--challenger);
+  opacity: 0.8;
+}
+
+.hbar-val {
+  font-size: 0.78rem;
+  width: 68px;
+  flex-shrink: 0;
+  text-align: left;
+  color: var(--muted);
+}
+
+.hbar-val.winner-val {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.spark-insight {
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .page-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-row {
+    grid-template-columns: 1fr;
+  }
+
+  .side.rlpa-side {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .side.challenger-side {
+    border-left: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .controls-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .score-banner {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

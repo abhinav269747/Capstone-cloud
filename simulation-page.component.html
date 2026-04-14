@@ -1,0 +1,198 @@
+<section class="hero">
+  <div>
+    <p class="eyebrow">Simulation Workspace</p>
+    <h2>Run and Observe Scheduler Behavior</h2>
+    <p class="lede">
+      Start simulations from the browser, stream live scheduling activity, and inject load into a running cluster.
+    </p>
+  </div>
+  <div class="status-panel">
+    <span class="status-pill" [class.live]="hasRunningJob">
+      {{ currentJob?.status || 'idle' }}
+    </span>
+    <p *ngIf="currentJob">Job {{ currentJob.job_id }}</p>
+    <p *ngIf="currentSnapshot">Sim time {{ currentSnapshot.time | number:'1.0-0' }}</p>
+  </div>
+</section>
+
+<p class="error" *ngIf="connectionError">{{ connectionError }}</p>
+
+<section class="workspace-grid">
+  <section class="panel control-panel">
+    <h2>Simulation Control</h2>
+    <div class="preset-row">
+      <button
+        type="button"
+        class="preset"
+        *ngFor="let preset of runPresets"
+        [class.active]="selectedPresetKey === preset.key"
+        (click)="applyPreset(preset.key)">
+        {{ preset.label }}
+      </button>
+    </div>
+    <div class="field-grid">
+      <label>
+        Scheduler
+        <select [(ngModel)]="form.scheduler" name="scheduler">
+          <option *ngFor="let scheduler of options?.schedulers ?? []" [value]="scheduler">{{ scheduler }}</option>
+        </select>
+      </label>
+      <label>
+        Workload Pattern
+        <select [(ngModel)]="form.workload_pattern" name="pattern">
+          <option *ngFor="let pattern of options?.workload_patterns ?? []" [value]="pattern">{{ pattern }}</option>
+        </select>
+      </label>
+      <label>
+        Simulation Time
+        <input type="number" [(ngModel)]="form.simulation_time" name="simulation_time" />
+      </label>
+    </div>
+
+    <button type="button" class="linkish" (click)="showAdvanced = !showAdvanced">
+      {{ showAdvanced ? 'Hide advanced settings' : 'Show advanced settings' }}
+    </button>
+
+    <div class="field-grid" *ngIf="showAdvanced">
+      <label>
+        Log Interval
+        <input type="number" [(ngModel)]="form.log_interval" name="log_interval" />
+      </label>
+      <label>
+        Arrival Rate
+        <input type="number" [(ngModel)]="form.arrival_rate" name="arrival_rate" />
+      </label>
+      <label>
+        Service Mean
+        <input type="number" [(ngModel)]="form.service_time_mean" name="service_mean" />
+      </label>
+      <label>
+        Service Std
+        <input type="number" [(ngModel)]="form.service_time_std" name="service_std" />
+      </label>
+      <label>
+        Random Seed
+        <input type="number" [(ngModel)]="form.random_seed" name="random_seed" />
+      </label>
+      <label>
+        Realtime Delay (s)
+        <input type="number" step="0.01" [(ngModel)]="form.realtime_delay_seconds" name="realtime_delay_seconds" />
+      </label>
+    </div>
+
+    <button class="primary" (click)="startSimulation()" [disabled]="isStarting">
+      {{ isStarting ? 'Starting...' : 'Start Simulation' }}
+    </button>
+
+    <div class="injector">
+      <h3>Inject Load</h3>
+      <div class="field-grid compact">
+        <label>
+          VM Profile
+          <select [(ngModel)]="injection.vm_profile" name="vm_profile">
+            <option *ngFor="let profile of options?.vm_profiles | keyvalue" [value]="profile.key">{{ profile.key }}</option>
+          </select>
+        </label>
+        <label>
+          VM Count
+          <input type="number" [(ngModel)]="injection.vm_count" name="vm_count" />
+        </label>
+        <label>
+          Priority
+          <input type="number" [(ngModel)]="injection.priority" name="priority" />
+        </label>
+      </div>
+      <button class="secondary" (click)="injectLoad()" [disabled]="!hasRunningJob">Send Load</button>
+    </div>
+  </section>
+
+  <section class="panel metrics-panel">
+    <h2>Live Summary</h2>
+    <div class="metric-cards">
+      <article class="metric-card">
+        <span>Pending</span>
+        <strong>{{ currentSnapshot?.pending_vm_count ?? 0 }}</strong>
+      </article>
+      <article class="metric-card">
+        <span>Running</span>
+        <strong>{{ currentSnapshot?.running_vm_count ?? 0 }}</strong>
+      </article>
+      <article class="metric-card">
+        <span>Completed</span>
+        <strong>{{ currentSnapshot?.completed_vm_count ?? 0 }}</strong>
+      </article>
+      <article class="metric-card accent">
+        <span>Total Energy</span>
+        <strong>{{ metricValue('total_energy_kwh') | number:'1.2-2' }} kWh</strong>
+      </article>
+      <article class="metric-card accent">
+        <span>Carbon</span>
+        <strong>{{ metricValue('carbon_footprint_kg_baseline') | number:'1.2-2' }} kg</strong>
+      </article>
+      <article class="metric-card">
+        <span>Avg Utilization</span>
+        <strong>{{ metricValue('avg_utilization') | percent:'1.1-1' }}</strong>
+      </article>
+    </div>
+
+    <div class="chart-grid">
+      <article class="chart-card">
+        <header>
+          <h3>Power</h3>
+          <span>{{ powerSeries.length ? (powerSeries[powerSeries.length - 1].value | number:'1.0-0') : 0 }} W</span>
+        </header>
+        <svg viewBox="0 0 320 110" preserveAspectRatio="none">
+          <polyline [attr.points]="sparkline(powerSeries)" />
+        </svg>
+      </article>
+      <article class="chart-card">
+        <header>
+          <h3>Queue</h3>
+          <span>{{ queueSeries.length ? queueSeries[queueSeries.length - 1].value : 0 }}</span>
+        </header>
+        <svg viewBox="0 0 320 110" preserveAspectRatio="none">
+          <polyline [attr.points]="sparkline(queueSeries)" />
+        </svg>
+      </article>
+      <article class="chart-card">
+        <header>
+          <h3>Utilization</h3>
+          <span>{{ utilizationSeries.length ? (utilizationSeries[utilizationSeries.length - 1].value | number:'1.0-1') : 0 }}%</span>
+        </header>
+        <svg viewBox="0 0 320 110" preserveAspectRatio="none">
+          <polyline [attr.points]="sparkline(utilizationSeries)" />
+        </svg>
+      </article>
+    </div>
+  </section>
+</section>
+
+<section class="lower-grid">
+  <section class="panel server-panel">
+    <h2>Server Rack</h2>
+    <div class="server-grid">
+      <article class="server-card" *ngFor="let server of recentServers">
+        <header>
+          <strong>{{ serverDisplayName(server) }}</strong>
+          <span [class.online]="serverBool(server, 'is_powered_on')" [class.offline]="!serverBool(server, 'is_powered_on')">{{ serverBool(server, 'is_powered_on') ? 'on' : 'off' }}</span>
+        </header>
+        <p>Utilization: {{ serverNumber(server, 'utilization') | percent:'1.1-1' }}</p>
+        <p>Power: {{ serverNumber(server, 'power_watts') | number:'1.0-0' }} W</p>
+        <p>VMs: {{ serverNumber(server, 'vm_count') }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel event-panel">
+    <h2>Event Stream</h2>
+    <div class="event-list">
+      <article class="event-item" *ngFor="let event of events">
+        <div>
+          <strong>{{ event.event_type }}</strong>
+          <span>{{ event.time ?? 0 | number:'1.0-1' }}</span>
+        </div>
+        <pre>{{ event.details | json }}</pre>
+      </article>
+    </div>
+  </section>
+</section>

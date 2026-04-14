@@ -1,0 +1,66 @@
+<section class="panel comparison-panel">
+  <div class="comparison-header">
+    <div>
+      <p class="eyebrow">Scheduler Comparison</p>
+      <h2>RLPA vs Challenger</h2>
+      <p>RLPA is fixed as baseline. Pick one algorithm and compare under identical workload settings.</p>
+    </div>
+
+    <div class="comparison-controls">
+      <label>
+        Baseline
+        <input type="text" value="RLPA" disabled />
+      </label>
+      <label>
+        Challenger
+        <select [(ngModel)]="form.challenger_scheduler" name="challenger_scheduler">
+          <option *ngFor="let scheduler of challengers" [value]="scheduler">{{ scheduler }}</option>
+        </select>
+      </label>
+      <label>
+        Workload Pattern
+        <select [(ngModel)]="form.workload_pattern" name="comparison_pattern">
+          <option value="poisson">poisson</option>
+          <option value="bursty">bursty</option>
+          <option value="time_varying">time_varying</option>
+        </select>
+      </label>
+      <label>
+        Simulation Time
+        <input type="number" [(ngModel)]="form.simulation_time" name="comparison_time" />
+      </label>
+      <label>
+        Arrival Rate
+        <input type="number" [(ngModel)]="form.arrival_rate" name="comparison_arrival_rate" />
+      </label>
+      <button class="primary" (click)="compare()" [disabled]="running">
+        {{ running ? 'Comparing...' : 'Compare' }}
+      </button>
+    </div>
+  </div>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+
+  <div *ngIf="result" class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>RLPA</th>
+          <th>{{ result.challenger_scheduler }}</th>
+          <th>Delta (Challenger - RLPA)</th>
+          <th>Delta % vs RLPA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let key of metricOrder" [class]="deltaClass(key)">
+          <td>{{ labels[key] }}</td>
+          <td>{{ fmt(key, metric(key).rlpa) }}</td>
+          <td>{{ fmt(key, metric(key).challenger) }}</td>
+          <td>{{ fmt(key, metric(key).delta) }}</td>
+          <td>{{ metric(key).deltaPct | number:'1.2-2' }}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,114 @@
+.comparison-panel {
+  margin-bottom: 20px;
+}
+
+.comparison-header {
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.comparison-header p {
+  color: #5e685f;
+}
+
+.comparison-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  align-items: end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+}
+
+input,
+select {
+  border-radius: 12px;
+  border: 1px solid rgba(22, 33, 28, 0.11);
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+button.primary {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 14px;
+  background: linear-gradient(135deg, #0f7b67, #004b41);
+  color: #fff8ee;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error {
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(159, 60, 47, 0.12);
+  color: #9f3c2f;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 248, 237, 0.94);
+  border: 1px solid rgba(22, 33, 28, 0.11);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(22, 33, 28, 0.08);
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4f5b52;
+}
+
+tr.better-rlpa {
+  background: rgba(0, 109, 91, 0.09);
+}
+
+tr.better-challenger {
+  background: rgba(201, 119, 34, 0.12);
+}
+
+tr.neutral {
+  background: transparent;
+}
+
+@media (max-width: 1100px) {
+  .comparison-header {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,40 +1,43 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.Python
-.venv/
-venv/
-env/
-*.egg-info/
-dist/
-build/
-.eggs/
-*.egg
-.pytest_cache/
-.coverage
-htmlcov/
-*.log
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
-# Node / Angular
-frontend/node_modules/
-frontend/dist/
-frontend/.angular/
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
 
-# Output / generated files
-output/
-audit_output.txt
-benchmark_output.txt
-full_audit_latest.txt
-presentation_data.txt
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
 
-# OS
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
+
+# System files
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-*.suo
-*.user

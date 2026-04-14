@@ -1,157 +1,68 @@
-# Green Cloud Data Center with AI Optimization
+# Frontend
 
-A SimPy-based simulator for evaluating resource scheduling algorithms in energy-aware cloud data centers.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.22.
 
-## Project Overview
+## Development server
 
-This project compares various scheduling algorithms to optimize virtual machine (VM) placement in cloud data centers while minimizing energy consumption and maintaining Quality of Service (QoS).
-
-**Algorithms Evaluated:**
-- FCFS (First-Come-First-Served)
-- Best-Fit Placement
-- Energy-Aware Scheduling
-- SJF (Shortest-Job-First)
-- ACO (Ant Colony Optimization)
-- GWO (Grey Wolf Optimization)
-- RL + Predictive Analysis (RL+PA)
-
-## Project Structure
-
-```
-capstone_project/
-├── backend/
-│   ├── app.py                     # FastAPI REST API and SSE event stream
-│   └── run.py                     # Backend launcher
-├── config/
-│   └── default_config.py          # Configuration parameters
-├── frontend/                      # Angular dashboard for interactive control
-├── src/
-│   ├── models.py                  # Core data models (Server, VM, Request)
-│   ├── workload_generator.py      # Workload and request generation
-│   ├── simulation_engine.py       # Main SimPy simulation engine
-│   └── schedulers.py              # Placement algorithms
-├── utils/
-│   └── metrics.py                 # Metrics collection and tracking
-├── output/                        # Simulation results (JSON)
-├── tests/                         # Unit tests
-├── main.py                        # Entry point: run comparisons
-└── README.md                      # This file
-```
-
-## Key Concepts
-
-### Data Models
-
-**PhysicalServer**: Heterogeneous physical machines with:
-- Unique CPU, GPU, RAM capacity
-- Individual power models (idle and peak power)
-- Energy efficiency factor
-
-**VirtualMachine**: Job/request with:
-- Resource requirements (CPU, GPU, RAM)
-- Service time (execution duration)
-- SLA deadline
-- Lifecycle states (pending, running, completed)
-
-**WorkloadRequest**: Incoming request that may spawn multiple VMs
-
-### Simulation Flow
-
-1. **Arrival**: Requests arrive according to a workload pattern (Poisson, bursty, time-varying)
-2. **Queuing**: VMs wait in queue until scheduled
-3. **Placement**: Scheduler algorithm assigns VMs to physical servers
-4. **Execution**: VMs run for their service time
-5. **Completion**: VMs finish; server resources freed
-6. **Metrics**: Energy, SLA violations, waiting time tracked throughout
-
-## Getting Started
-
-### Installation
+To start a local development server, run:
 
 ```bash
-pip install -r requirements.txt
+ng serve
 ```
 
-### Running Simulations
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+
+## App routes
+
+The app now uses route-based pages for the main workflows:
+
+- `/simulation` - Main simulation page with live metrics and charts.
+- `/comparison` - RLPA vs challenger comparison page with side-by-side values, delta insights, and visual graphs.
+
+The default route `/` redirects to `/simulation`.
+
+## Code scaffolding
+
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
 ```bash
-python main.py
+ng generate component component-name
 ```
 
-This runs all baseline algorithms on the same scenario and prints a comparison table.
-
-### Running the Interactive Stack
-
-Backend API:
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
 ```bash
-python -m backend.run
+ng generate --help
 ```
 
-Frontend dashboard:
+## Building
+
+To build the project run:
 
 ```bash
-cd frontend
-npm install
-npm start
+ng build
 ```
 
-Open `http://localhost:4200` to start simulations, watch live power/queue/utilization charts,
-inspect per-server state, and inject manual VM load while a run is active.
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-### REST API
+## Running unit tests
 
-- `GET /api/options`: available schedulers, workload patterns, VM profiles, and defaults
-- `POST /api/simulations`: start a background simulation job
-- `GET /api/simulations/{job_id}`: current job state and recent events
-- `GET /api/simulations/{job_id}/results`: final results after completion
-- `POST /api/simulations/{job_id}/inject-load`: inject manual VM load into a running simulation
-- `GET /api/simulations/{job_id}/events`: Server-Sent Events stream for live frontend updates
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
-### Configuration
+```bash
+ng test
+```
 
-Edit `config/default_config.py` to customize:
-- Data center servers and capacities
-- Workload arrival rate and patterns
-- VM resource profiles
-- SLA and QoS targets
-- Simulation duration
+## Running end-to-end tests
 
-## Metrics Collected
+For end-to-end (e2e) testing, run:
 
-- **Energy**: Total kWh, average power, peak power
-- **Carbon**: Grid-only and renewable-adjusted CO2e estimates
-- **Performance**: Average waiting time, turnaround time
-- **Availability**: VMs completed, success rate
-- **SLA**: Violation count and rate
-- **Utilization**: Server CPU/GPU/RAM utilization
+```bash
+ng e2e
+```
 
-## Frontend Features
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-- Interactive simulation launch form with scheduler and workload controls
-- Real-time power, queue, and utilization sparklines from the event stream
-- Per-server rack view with power state and VM counts
-- Live event feed showing placements, migrations, wakeups, and completions
-- Manual load injection into a running simulation through REST calls
+## Additional Resources
 
-## Next Steps
-
-1. Add trace-replay mode to the interactive API using the Alibaba-style trace reader
-2. Add comparison dashboards with side-by-side scheduler runs
-3. Persist simulation history in a lightweight database for replay and reporting
-4. Add richer charts and filtering for event streams and server timelines
-5. Expand automated tests for API endpoints and frontend behaviors
-
-## References
-
-- SimPy Documentation: https://simpy.readthedocs.io/
-- Green Data Center Research: Energy-aware scheduling literature
-- Reinforcement Learning: Multi-agent scheduling in cloud environments
-
-## License
-
-MIT
-
-## Author
-
-Capstone Project Team
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

@@ -1,0 +1,178 @@
+<div class="comparison-shell">
+
+  <!-- ── Page header ──────────────────────────── -->
+  <section class="page-hero">
+    <div>
+      <p class="eyebrow">Algorithm Comparison</p>
+      <h1>RLPA vs Challenger</h1>
+      <p class="lede">Run both algorithms under identical conditions and see exactly where RLPA wins.</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls-card panel">
+      <div class="controls-grid">
+        <label>
+          Baseline
+          <input type="text" value="RLPA" disabled />
+        </label>
+        <label>
+          Challenger
+          <select [(ngModel)]="form.challenger_scheduler">
+            <option *ngFor="let s of challengers" [value]="s">{{ s }}</option>
+          </select>
+        </label>
+        <label>
+          Workload Pattern
+          <select [(ngModel)]="form.workload_pattern">
+            <option value="poisson">Poisson</option>
+            <option value="bursty">Bursty</option>
+            <option value="time_varying">Time-Varying</option>
+          </select>
+        </label>
+        <label>
+          Simulation Time
+          <input type="number" [(ngModel)]="form.simulation_time" />
+        </label>
+        <label>
+          Arrival Rate
+          <input type="number" [(ngModel)]="form.arrival_rate" />
+        </label>
+        <label>
+          Seed
+          <input type="number" [(ngModel)]="form.random_seed" />
+        </label>
+      </div>
+      <button class="primary run-btn" (click)="compare()" [disabled]="running">
+        {{ running ? 'Running comparison...' : 'Run Comparison' }}
+      </button>
+    </div>
+  </section>
+
+  <p class="error-banner" *ngIf="error">{{ error }}</p>
+
+  <!-- ── Results ──────────────────────────────── -->
+  <ng-container *ngIf="result">
+
+    <!-- Score banner -->
+    <section class="score-banner panel">
+      <div class="score-block rlpa-side">
+        <p class="score-label">RLPA wins</p>
+        <p class="score-num">{{ rlpaWinsCount }}</p>
+        <p class="score-sub">out of {{ metricOrder.length }} metrics</p>
+      </div>
+      <div class="score-vs">VS</div>
+      <div class="score-block challenger-side">
+        <p class="score-label">{{ result.challenger_scheduler }} wins</p>
+        <p class="score-num">{{ challengerWinsCount }}</p>
+        <p class="score-sub">out of {{ metricOrder.length }} metrics</p>
+      </div>
+    </section>
+
+    <!-- Bar chart overview -->
+    <section class="panel chart-section">
+      <h2>Metric Overview - Bar Chart</h2>
+      <p class="chart-note">Each metric group is independently normalized — bar height shows relative difference within that metric, not absolute value.</p>
+      <p class="chart-legend">
+        <span class="dot rlpa-dot"></span>RLPA &nbsp;
+        <span class="dot challenger-dot"></span>{{ result.challenger_scheduler }}
+      </p>
+      <div class="css-bar-chart">
+        <div class="css-bar-group" *ngFor="let g of chartGroups">
+          <div class="css-bars-area">
+            <div class="css-bar-col">
+              <span class="css-val rlpa-text" [title]="fmt(g.key, g.rlpa)">{{ fmt(g.key, g.rlpa) }}</span>
+              <div class="css-bar rlpa-bar" [style.height.px]="g.rlpaPx"
+                [class.winner-bar]="g.winner === 'rlpa-wins'"></div>
+            </div>
+            <div class="css-bar-col">
+              <span class="css-val challenger-text" [title]="fmt(g.key, g.challenger)">{{ fmt(g.key, g.challenger) }}</span>
+              <div class="css-bar challenger-bar" [style.height.px]="g.challengerPx"
+                [class.winner-bar]="g.winner === 'challenger-wins'"></div>
+            </div>
+          </div>
+          <span class="css-xlabel">{{ g.label.split('(')[0].trim() }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Side-by-side metric cards -->
+    <section class="metric-section">
+      <h2 class="section-title">Side-by-Side Metrics</h2>
+
+      <div class="metric-rows">
+        <ng-container *ngFor="let key of metricOrder">
+          <div class="metric-row panel" [class.rlpa-win-row]="winner(key) === 'rlpa-wins'" [class.challenger-win-row]="winner(key) === 'challenger-wins'">
+
+            <!-- RLPA side -->
+            <div class="side rlpa-side">
+              <p class="side-label">RLPA</p>
+              <p class="side-value" [class.winner-value]="winner(key) === 'rlpa-wins'">{{ fmt(key, metric(key).rlpa) }}</p>
+            </div>
+
+            <!-- Centre info -->
+            <div class="metric-centre">
+              <p class="metric-name">{{ labels[key] }}</p>
+              <div class="delta-badge" [class.rlpa-badge]="winner(key) === 'rlpa-wins'" [class.challenger-badge]="winner(key) === 'challenger-wins'" [class.tie-badge]="winner(key) === 'tie'">
+                <span class="winner-chip">{{ winnerLabel(key) }}</span>
+                <span class="delta-val" *ngIf="winner(key) !== 'tie'">
+                  Δ {{ fmt(key, metric(key).delta) }} &nbsp;/&nbsp; {{ metric(key).deltaPct | number:'1.1-1' }}%
+                </span>
+              </div>
+              <p class="diff-sentence">{{ diffSentence(key) }}</p>
+              <p class="metric-insight">{{ metricInsight[key] }}</p>
+            </div>
+
+            <!-- Challenger side -->
+            <div class="side challenger-side">
+              <p class="side-label">{{ result.challenger_scheduler }}</p>
+              <p class="side-value" [class.winner-value]="winner(key) === 'challenger-wins'">{{ fmt(key, metric(key).challenger) }}</p>
+            </div>
+
+          </div>
+        </ng-container>
+      </div>
+    </section>
+
+    <!-- Sparkline charts for key metrics -->
+    <section class="panel spark-section">
+      <h2>Per-Metric Visual Comparison</h2>
+      <div class="spark-grid">
+        <ng-container *ngFor="let key of metricOrder">
+          <article class="spark-card" [class.rlpa-win-card]="winner(key) === 'rlpa-wins'" [class.challenger-win-card]="winner(key) === 'challenger-wins'">
+            <header class="spark-header">
+              <span class="spark-metric-name">{{ labels[key] }}</span>
+              <span class="winner-tag" [class.rlpa-tag]="winner(key) === 'rlpa-wins'" [class.challenger-tag]="winner(key) === 'challenger-wins'" [class.tie-tag]="winner(key) === 'tie'">
+                {{ winnerLabel(key) }}
+              </span>
+            </header>
+
+            <!-- Horizontal bar comparison -->
+            <div class="hbar-wrap">
+              <div class="hbar-row">
+                <span class="hbar-algo">RLPA</span>
+                <div class="hbar-track">
+                  <div class="hbar-fill rlpa-fill"
+                    [style.width.%]="(metric(key).rlpa / (metric(key).rlpa + metric(key).challenger || 1)) * 100">
+                  </div>
+                </div>
+                <span class="hbar-val" [class.winner-val]="winner(key) === 'rlpa-wins'">{{ fmt(key, metric(key).rlpa) }}</span>
+              </div>
+              <div class="hbar-row">
+                <span class="hbar-algo">{{ result.challenger_scheduler }}</span>
+                <div class="hbar-track">
+                  <div class="hbar-fill challenger-fill"
+                    [style.width.%]="(metric(key).challenger / (metric(key).rlpa + metric(key).challenger || 1)) * 100">
+                  </div>
+                </div>
+                <span class="hbar-val" [class.winner-val]="winner(key) === 'challenger-wins'">{{ fmt(key, metric(key).challenger) }}</span>
+              </div>
+            </div>
+
+            <p class="spark-insight">{{ metricInsight[key] }}</p>
+          </article>
+        </ng-container>
+      </div>
+    </section>
+
+  </ng-container>
+</div>
