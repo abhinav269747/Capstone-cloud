@@ -1,0 +1,811 @@
+{
+  "simulation_name": "BestFit_poisson",
+  "start_time": "2026-04-07 12:23:53.498251",
+  "statistics": {
+    "total_vms_completed": 664,
+    "total_vms_failed": 0,
+    "total_sla_violations": 629,
+    "total_migrations": 38,
+    "total_failed_migrations": 0,
+    "total_server_wakeups": 32,
+    "total_server_shutdowns": 33,
+    "sla_violation_rate": 0.947289156626506,
+    "avg_waiting_time": 0.7882564081921916,
+    "max_waiting_time": 9.759767850479761,
+    "avg_turnaround_time": 100.78859134705762,
+    "max_turnaround_time": 184.39203884700578,
+    "total_energy_kwh": 223.60398048941792,
+    "total_migration_energy_kwh": 0.07600000000000005,
+    "total_server_power_state_energy_kwh": 0.3200000000000001,
+    "avg_power_watts": 1352.775639329806,
+    "peak_power_watts": 3624.8035714285716,
+    "avg_utilization": 0.2100184383517717,
+    "carbon_footprint_kg_baseline": 112.20447740958991,
+    "carbon_footprint_kg_renewable_avg": 78.54313418671293
+  },
+  "event_log": [
+    {
+      "time": 20.401205745496018,
+      "event_type": "request_arrival",
+      "request_id": "req_0",
+      "vm_count": 1
+    },
+    {
+      "time": 21,
+      "event_type": "vm_placement",
+      "vm_id": "req_0_vm0",
+      "server": "CPU_Server_1",
+      "wait_time": 0.5987942545039822
+    },
+    {
+      "time": 25,
+      "event_type": "vm_migration",
+      "vm_id": "req_0_vm0",
+      "source": "CPU_Server_1",
+      "destination": "CPU_Server_2",
+      "downtime": 1.5,
+      "migration_count": 1
+    },
+    {
+      "time": 64.94696773652363,
+      "event_type": "request_arrival",
+      "request_id": "req_1",
+      "vm_count": 1
+    },
+    {
+      "time": 65,
+      "event_type": "vm_placement",
+      "vm_id": "req_1_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.0530322634763678
+    },
+    {
+      "time": 69.88130165572012,
+      "event_type": "request_arrival",
+      "request_id": "req_2",
+      "vm_count": 1
+    },
+    {
+      "time": 70,
+      "event_type": "vm_placement",
+      "vm_id": "req_2_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.11869834427987769
+    },
+    {
+      "time": 76.40118793179505,
+      "event_type": "request_arrival",
+      "request_id": "req_3",
+      "vm_count": 2
+    },
+    {
+      "time": 77,
+      "event_type": "vm_placement",
+      "vm_id": "req_3_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5988120682049498
+    },
+    {
+      "time": 78,
+      "event_type": "vm_placement",
+      "vm_id": "req_3_vm1",
+      "server": "CPU_Server_1",
+      "wait_time": 1.5988120682049498
+    },
+    {
+      "time": 105.23683286902593,
+      "event_type": "request_arrival",
+      "request_id": "req_4",
+      "vm_count": 1
+    },
+    {
+      "time": 106,
+      "event_type": "vm_placement",
+      "vm_id": "req_4_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.7631671309740682
+    },
+    {
+      "time": 118.67235148651339,
+      "event_type": "vm_completion",
+      "vm_id": "req_0_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 98.27114574101738,
+      "sla_violated": true
+    },
+    {
+      "time": 120.07939756977127,
+      "event_type": "vm_completion",
+      "vm_id": "req_1_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 55.13242983324764,
+      "sla_violated": true
+    },
+    {
+      "time": 123.74982220814623,
+      "event_type": "request_arrival",
+      "request_id": "req_5",
+      "vm_count": 1
+    },
+    {
+      "time": 124,
+      "event_type": "vm_placement",
+      "vm_id": "req_5_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.25017779185377265
+    },
+    {
+      "time": 130,
+      "event_type": "server_power_off",
+      "server": "GPU_Server_1"
+    },
+    {
+      "time": 130,
+      "event_type": "server_power_off",
+      "server": "Balanced_Server_1"
+    },
+    {
+      "time": 130,
+      "event_type": "server_power_off",
+      "server": "GPU_Server_2"
+    },
+    {
+      "time": 139.81087711787592,
+      "event_type": "request_arrival",
+      "request_id": "req_6",
+      "vm_count": 2
+    },
+    {
+      "time": 140,
+      "event_type": "server_wakeup_start",
+      "server": "Balanced_Server_1",
+      "delay": 8
+    },
+    {
+      "time": 141,
+      "event_type": "server_wakeup_start",
+      "server": "GPU_Server_1",
+      "delay": 8
+    },
+    {
+      "time": 141.3359036999991,
+      "event_type": "vm_completion",
+      "vm_id": "req_2_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 71.45460204427899,
+      "sla_violated": true
+    },
+    {
+      "time": 142,
+      "event_type": "server_wakeup_start",
+      "server": "GPU_Server_2",
+      "delay": 8
+    },
+    {
+      "time": 144.98365652481922,
+      "event_type": "request_arrival",
+      "request_id": "req_7",
+      "vm_count": 2
+    },
+    {
+      "time": 145,
+      "event_type": "vm_placement",
+      "vm_id": "req_7_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.016343475180775613
+    },
+    {
+      "time": 145,
+      "event_type": "vm_placement",
+      "vm_id": "req_7_vm1",
+      "server": "CPU_Server_2",
+      "wait_time": 0.016343475180775613
+    },
+    {
+      "time": 148,
+      "event_type": "server_wakeup_complete",
+      "server": "Balanced_Server_1"
+    },
+    {
+      "time": 148,
+      "event_type": "vm_placement",
+      "vm_id": "req_6_vm0",
+      "server": "Balanced_Server_1",
+      "wait_time": 8.189122882124082
+    },
+    {
+      "time": 149,
+      "event_type": "server_wakeup_complete",
+      "server": "GPU_Server_1"
+    },
+    {
+      "time": 149,
+      "event_type": "vm_placement",
+      "vm_id": "req_6_vm1",
+      "server": "GPU_Server_1",
+      "wait_time": 9.189122882124082
+    },
+    {
+      "time": 150,
+      "event_type": "server_wakeup_complete",
+      "server": "GPU_Server_2"
+    },
+    {
+      "time": 154.06097712322153,
+      "event_type": "request_arrival",
+      "request_id": "req_8",
+      "vm_count": 1
+    },
+    {
+      "time": 155,
+      "event_type": "vm_placement",
+      "vm_id": "req_8_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.9390228767784663
+    },
+    {
+      "time": 172.8486336831469,
+      "event_type": "request_arrival",
+      "request_id": "req_9",
+      "vm_count": 1
+    },
+    {
+      "time": 173,
+      "event_type": "vm_placement",
+      "vm_id": "req_9_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.15136631685311386
+    },
+    {
+      "time": 174.36016116586092,
+      "event_type": "vm_completion",
+      "vm_id": "req_3_vm1",
+      "server": "CPU_Server_1",
+      "turnaround_time": 97.95897323406587,
+      "sla_violated": true
+    },
+    {
+      "time": 192.87102606626064,
+      "event_type": "vm_completion",
+      "vm_id": "req_3_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 116.46983813446559,
+      "sla_violated": true
+    },
+    {
+      "time": 196.15406015300886,
+      "event_type": "request_arrival",
+      "request_id": "req_10",
+      "vm_count": 2
+    },
+    {
+      "time": 197,
+      "event_type": "vm_placement",
+      "vm_id": "req_10_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.8459398469911434
+    },
+    {
+      "time": 197,
+      "event_type": "vm_placement",
+      "vm_id": "req_10_vm1",
+      "server": "CPU_Server_2",
+      "wait_time": 0.8459398469911434
+    },
+    {
+      "time": 206.40943659816344,
+      "event_type": "request_arrival",
+      "request_id": "req_11",
+      "vm_count": 1
+    },
+    {
+      "time": 207,
+      "event_type": "vm_placement",
+      "vm_id": "req_11_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5905634018365618
+    },
+    {
+      "time": 216.48087322511526,
+      "event_type": "request_arrival",
+      "request_id": "req_12",
+      "vm_count": 1
+    },
+    {
+      "time": 217,
+      "event_type": "vm_placement",
+      "vm_id": "req_12_vm0",
+      "server": "GPU_Server_1",
+      "wait_time": 0.5191267748847395
+    },
+    {
+      "time": 222.5772102094991,
+      "event_type": "request_arrival",
+      "request_id": "req_13",
+      "vm_count": 1
+    },
+    {
+      "time": 223,
+      "event_type": "vm_placement",
+      "vm_id": "req_13_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.42278979050090015
+    },
+    {
+      "time": 226.57182494956228,
+      "event_type": "vm_completion",
+      "vm_id": "req_4_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 121.33499208053635,
+      "sla_violated": true
+    },
+    {
+      "time": 236.18300666130403,
+      "event_type": "vm_completion",
+      "vm_id": "req_7_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 91.19935013648481,
+      "sla_violated": true
+    },
+    {
+      "time": 236.82488235505744,
+      "event_type": "request_arrival",
+      "request_id": "req_14",
+      "vm_count": 2
+    },
+    {
+      "time": 237,
+      "event_type": "vm_placement",
+      "vm_id": "req_14_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.17511764494256
+    },
+    {
+      "time": 237,
+      "event_type": "vm_placement",
+      "vm_id": "req_14_vm1",
+      "server": "CPU_Server_2",
+      "wait_time": 0.17511764494256
+    },
+    {
+      "time": 237.54530620679202,
+      "event_type": "vm_completion",
+      "vm_id": "req_7_vm1",
+      "server": "CPU_Server_2",
+      "turnaround_time": 92.5616496819728,
+      "sla_violated": true
+    },
+    {
+      "time": 238.13758920148726,
+      "event_type": "request_arrival",
+      "request_id": "req_15",
+      "vm_count": 1
+    },
+    {
+      "time": 239,
+      "event_type": "vm_placement",
+      "vm_id": "req_15_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.8624107985127409
+    },
+    {
+      "time": 243.08071995180845,
+      "event_type": "vm_completion",
+      "vm_id": "req_6_vm0",
+      "server": "Balanced_Server_1",
+      "turnaround_time": 103.26984283393253,
+      "sla_violated": true
+    },
+    {
+      "time": 246.41268460991148,
+      "event_type": "vm_completion",
+      "vm_id": "req_6_vm1",
+      "server": "GPU_Server_1",
+      "turnaround_time": 106.60180749203556,
+      "sla_violated": true
+    },
+    {
+      "time": 250,
+      "event_type": "vm_migration",
+      "vm_id": "req_12_vm0",
+      "source": "GPU_Server_1",
+      "destination": "GPU_Server_2",
+      "downtime": 1.5,
+      "migration_count": 1
+    },
+    {
+      "time": 252.8446721759086,
+      "event_type": "vm_completion",
+      "vm_id": "req_5_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 129.0948499677624,
+      "sla_violated": true
+    },
+    {
+      "time": 258.1785482334439,
+      "event_type": "vm_completion",
+      "vm_id": "req_11_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 51.76911163528047,
+      "sla_violated": true
+    },
+    {
+      "time": 263.64852781494807,
+      "event_type": "request_arrival",
+      "request_id": "req_16",
+      "vm_count": 2
+    },
+    {
+      "time": 264,
+      "event_type": "vm_placement",
+      "vm_id": "req_16_vm0",
+      "server": "Balanced_Server_1",
+      "wait_time": 0.35147218505193223
+    },
+    {
+      "time": 264.45554672604857,
+      "event_type": "vm_completion",
+      "vm_id": "req_9_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 91.60691304290168,
+      "sla_violated": true
+    },
+    {
+      "time": 265,
+      "event_type": "vm_placement",
+      "vm_id": "req_16_vm1",
+      "server": "GPU_Server_2",
+      "wait_time": 1.3514721850519322
+    },
+    {
+      "time": 275.7411357922349,
+      "event_type": "request_arrival",
+      "request_id": "req_17",
+      "vm_count": 1
+    },
+    {
+      "time": 276,
+      "event_type": "vm_placement",
+      "vm_id": "req_17_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.2588642077651002
+    },
+    {
+      "time": 296.9755919125815,
+      "event_type": "vm_completion",
+      "vm_id": "req_8_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 142.91461478935994,
+      "sla_violated": true
+    },
+    {
+      "time": 300,
+      "event_type": "server_power_off",
+      "server": "CPU_Server_1"
+    },
+    {
+      "time": 304.44765160043653,
+      "event_type": "request_arrival",
+      "request_id": "req_18",
+      "vm_count": 2
+    },
+    {
+      "time": 305,
+      "event_type": "vm_placement",
+      "vm_id": "req_18_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5523483995634706
+    },
+    {
+      "time": 305,
+      "event_type": "vm_placement",
+      "vm_id": "req_18_vm1",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5523483995634706
+    },
+    {
+      "time": 306.67167089664065,
+      "event_type": "vm_completion",
+      "vm_id": "req_14_vm1",
+      "server": "CPU_Server_2",
+      "turnaround_time": 69.84678854158321,
+      "sla_violated": true
+    },
+    {
+      "time": 319.3160620311205,
+      "event_type": "vm_completion",
+      "vm_id": "req_12_vm0",
+      "server": "GPU_Server_2",
+      "turnaround_time": 102.83518880600525,
+      "sla_violated": true
+    },
+    {
+      "time": 320.6526736367444,
+      "event_type": "vm_completion",
+      "vm_id": "req_10_vm1",
+      "server": "CPU_Server_2",
+      "turnaround_time": 124.49861348373554,
+      "sla_violated": true
+    },
+    {
+      "time": 333.20031421127754,
+      "event_type": "request_arrival",
+      "request_id": "req_19",
+      "vm_count": 1
+    },
+    {
+      "time": 334,
+      "event_type": "vm_placement",
+      "vm_id": "req_19_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.7996857887224564
+    },
+    {
+      "time": 341.9232539078157,
+      "event_type": "vm_completion",
+      "vm_id": "req_15_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 103.78566470632845,
+      "sla_violated": true
+    },
+    {
+      "time": 345.21079946222625,
+      "event_type": "vm_completion",
+      "vm_id": "req_14_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 108.38591710716881,
+      "sla_violated": true
+    },
+    {
+      "time": 360.50143251146744,
+      "event_type": "vm_completion",
+      "vm_id": "req_16_vm0",
+      "server": "Balanced_Server_1",
+      "turnaround_time": 96.85290469651937,
+      "sla_violated": true
+    },
+    {
+      "time": 361.5059043337593,
+      "event_type": "vm_completion",
+      "vm_id": "req_13_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 138.9286941242602,
+      "sla_violated": true
+    },
+    {
+      "time": 364.8150875238498,
+      "event_type": "vm_completion",
+      "vm_id": "req_10_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 168.66102737084094,
+      "sla_violated": true
+    },
+    {
+      "time": 370,
+      "event_type": "server_power_off",
+      "server": "GPU_Server_1"
+    },
+    {
+      "time": 375.3936910228481,
+      "event_type": "request_arrival",
+      "request_id": "req_20",
+      "vm_count": 1
+    },
+    {
+      "time": 376,
+      "event_type": "vm_placement",
+      "vm_id": "req_20_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.6063089771519117
+    },
+    {
+      "time": 389.49123489844186,
+      "event_type": "vm_completion",
+      "vm_id": "req_16_vm1",
+      "server": "GPU_Server_2",
+      "turnaround_time": 125.84270708349379,
+      "sla_violated": true
+    },
+    {
+      "time": 391.61547601716745,
+      "event_type": "vm_completion",
+      "vm_id": "req_18_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 87.16782441673092,
+      "sla_violated": true
+    },
+    {
+      "time": 394.0724557241718,
+      "event_type": "vm_completion",
+      "vm_id": "req_18_vm1",
+      "server": "CPU_Server_2",
+      "turnaround_time": 89.62480412373526,
+      "sla_violated": true
+    },
+    {
+      "time": 396.6665159279801,
+      "event_type": "vm_completion",
+      "vm_id": "req_17_vm0",
+      "server": "CPU_Server_2",
+      "turnaround_time": 120.92538013574517,
+      "sla_violated": true
+    },
+    {
+      "time": 417.4699494097442,
+      "event_type": "request_arrival",
+      "request_id": "req_21",
+      "vm_count": 2
+    },
+    {
+      "time": 418,
+      "event_type": "vm_placement",
+      "vm_id": "req_21_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5300505902558257
+    },
+    {
+      "time": 418,
+      "event_type": "vm_placement",
+      "vm_id": "req_21_vm1",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5300505902558257
+    },
+    {
+      "time": 430.3678498924628,
+      "event_type": "request_arrival",
+      "request_id": "req_22",
+      "vm_count": 1
+    },
+    {
+      "time": 431,
+      "event_type": "vm_placement",
+      "vm_id": "req_22_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.6321501075371998
+    },
+    {
+      "time": 445.86784423930504,
+      "event_type": "request_arrival",
+      "request_id": "req_23",
+      "vm_count": 2
+    },
+    {
+      "time": 446,
+      "event_type": "vm_placement",
+      "vm_id": "req_23_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.13215576069495683
+    },
+    {
+      "time": 446,
+      "event_type": "vm_placement",
+      "vm_id": "req_23_vm1",
+      "server": "CPU_Server_2",
+      "wait_time": 0.13215576069495683
+    },
+    {
+      "time": 448.44734733460217,
+      "event_type": "request_arrival",
+      "request_id": "req_24",
+      "vm_count": 1
+    },
+    {
+      "time": 449,
+      "event_type": "vm_placement",
+      "vm_id": "req_24_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.5526526653978294
+    },
+    {
+      "time": 453.677622906776,
+      "event_type": "request_arrival",
+      "request_id": "req_25",
+      "vm_count": 2
+    },
+    {
+      "time": 454,
+      "event_type": "vm_placement",
+      "vm_id": "req_25_vm0",
+      "server": "CPU_Server_2",
+      "wait_time": 0.32237709322402
+    }
+  ],
+  "vm_metrics_count": 664,
+  "server_metrics": {
+    "CPU_Server_1": {
+      "final_state": {
+        "name": "CPU_Server_1",
+        "cpu_used": 0,
+        "cpu_total": 32,
+        "gpu_used": 0,
+        "gpu_total": 0,
+        "ram_used": 0,
+        "ram_total": 128,
+        "io_bandwidth_used_gbps": 0.0,
+        "io_bandwidth_total_gbps": 12,
+        "io_iops_used_k": 0,
+        "io_iops_total_k": 140,
+        "vm_count": 0,
+        "utilization": 0.0,
+        "power_watts": 0.0,
+        "is_powered_on": false
+      }
+    },
+    "GPU_Server_1": {
+      "final_state": {
+        "name": "GPU_Server_1",
+        "cpu_used": 8,
+        "cpu_total": 64,
+        "gpu_used": 2,
+        "gpu_total": 4,
+        "ram_used": 32,
+        "ram_total": 256,
+        "io_bandwidth_used_gbps": 1.8000000000000007,
+        "io_bandwidth_total_gbps": 16,
+        "io_iops_used_k": 20,
+        "io_iops_total_k": 180,
+        "vm_count": 1,
+        "utilization": 0.5,
+        "power_watts": 960.0,
+        "is_powered_on": true
+      }
+    },
+    "Balanced_Server_1": {
+      "final_state": {
+        "name": "Balanced_Server_1",
+        "cpu_used": 0,
+        "cpu_total": 48,
+        "gpu_used": 0,
+        "gpu_total": 2,
+        "ram_used": 0,
+        "ram_total": 192,
+        "io_bandwidth_used_gbps": 1.7763568394002505e-15,
+        "io_bandwidth_total_gbps": 14,
+        "io_iops_used_k": 0,
+        "io_iops_total_k": 160,
+        "vm_count": 0,
+        "utilization": 1.2688263138573217e-16,
+        "power_watts": 250.00000000000009,
+        "is_powered_on": true
+      }
+    },
+    "CPU_Server_2": {
+      "final_state": {
+        "name": "CPU_Server_2",
+        "cpu_used": 24,
+        "cpu_total": 32,
+        "gpu_used": 0,
+        "gpu_total": 0,
+        "ram_used": 48,
+        "ram_total": 128,
+        "io_bandwidth_used_gbps": 4.199999999999979,
+        "io_bandwidth_total_gbps": 12,
+        "io_iops_used_k": 42,
+        "io_iops_total_k": 140,
+        "vm_count": 5,
+        "utilization": 0.75,
+        "power_watts": 436.875,
+        "is_powered_on": true
+      }
+    },
+    "GPU_Server_2": {
+      "final_state": {
+        "name": "GPU_Server_2",
+        "cpu_used": 0,
+        "cpu_total": 64,
+        "gpu_used": 0,
+        "gpu_total": 4,
+        "ram_used": 0,
+        "ram_total": 256,
+        "io_bandwidth_used_gbps": 0.0,
+        "io_bandwidth_total_gbps": 16,
+        "io_iops_used_k": 0,
+        "io_iops_total_k": 180,
+        "vm_count": 0,
+        "utilization": 0.0,
+        "power_watts": 400.0,
+        "is_powered_on": true
+      }
+    }
+  }
+}

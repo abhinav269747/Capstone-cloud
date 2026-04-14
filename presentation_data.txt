@@ -1,0 +1,114 @@
+Green Cloud Data Center with AI Optimization - Presentation Data Pack
+
+1) TITLE
+Green Cloud Data Center with AI Optimization
+AI-Driven Scheduler Comparison for Energy-Efficient Cloud Operations
+
+2) PROBLEM STATEMENT
+- Cloud data centers consume high energy and produce significant carbon emissions.
+- Traditional schedulers usually optimize task completion, not sustainability.
+- Heterogeneous resources (CPU, GPU, RAM, I/O) make placement optimization difficult.
+- Need a scheduler that balances energy, carbon, QoS, and throughput.
+
+3) OBJECTIVES
+- Build a realistic cloud simulation platform.
+- Compare 8 scheduling algorithms under identical conditions.
+- Evaluate energy, carbon, SLA, latency, and utilization.
+- Develop and test RLPA (Reinforcement Learning + Predictive Analytics).
+
+4) SYSTEM OVERVIEW
+- Workload arrivals generate VM requests.
+- Scheduler assigns VMs to servers.
+- Simulation executes placement, execution, migration, completion, and power-state events.
+- Metrics module tracks energy, power, SLA, utilization, and carbon.
+- Frontend provides live run visualization and algorithm comparison.
+
+5) ALGORITHMS COMPARED
+- FCFS
+- RoundRobin
+- BestFit
+- EnergyAware
+- SJF
+- ACO
+- GWO
+- RLPA
+
+6) EXPERIMENTAL CONFIGURATION
+- Simulation time: 10,000 units
+- Random seed: 42
+- Workload pattern: Poisson
+- Arrival rate: 5 requests per 100 time units
+- Service time: mean 100, std 30
+- SLA max wait threshold: 50
+- VM migration: Enabled
+- Server power-state control: Enabled
+- Infrastructure: 5 heterogeneous servers (CPU/GPU/Balanced mix)
+
+7) METRICS EVALUATED
+- Total energy (kWh)
+- Carbon footprint (kg CO2e)
+- Average power (W)
+- Average waiting time
+- Average turnaround time
+- SLA violation rate
+- Average utilization
+- Total migrations
+- VMs completed
+
+8) MAIN RESULTS (POISSON)
+
+Scheduler      | Energy (kWh) | Carbon (kg CO2e) | Avg Power (W) | Avg Wait | Avg Turnaround | SLA Violation | Avg Utilization | Migrations | Completed VMs
+--------------|--------------|------------------|---------------|----------|----------------|---------------|-----------------|------------|---------------
+RLPA          | 221.97       | 111.38           | 1342.91       | 0.647    | 100.693        | 94.73%        | 16.13%          | 60         | 664
+BestFit       | 223.60       | 112.20           | 1352.78       | 0.788    | 100.789        | 94.73%        | 21.00%          | 38         | 664
+FCFS          | 224.87       | 112.84           | 1360.27       | 0.776    | 100.784        | 94.73%        | 19.43%          | 42         | 664
+SJF           | 227.32       | 114.07           | 1375.12       | 0.776    | 100.790        | 94.58%        | 19.59%          | 43         | 664
+ACO           | 228.27       | 114.55           | 1380.94       | 0.641    | 100.698        | 94.58%        | 15.62%          | 64         | 664
+EnergyAware   | 232.28       | 116.56           | 1404.71       | 0.728    | 100.772        | 94.73%        | 16.15%          | 56         | 664
+GWO           | 240.51       | 120.69           | 1454.79       | 0.675    | 100.739        | 94.58%        | 16.06%          | 70         | 664
+RoundRobin    | 285.44       | 143.24           | 1727.67       | 0.496    | 100.820        | 94.73%        | 16.65%          | 190        | 664
+
+9) KEY FINDINGS
+- RLPA has the lowest total energy among all compared schedulers.
+- RLPA has the lowest carbon footprint among all compared schedulers.
+- RLPA has the lowest average power draw.
+- Throughput is identical for all schedulers in this setup (664 completed VMs).
+- RoundRobin has the highest energy, highest carbon, and highest migration overhead.
+
+10) PERFORMANCE DELTAS (RLPA VS OTHERS)
+- Energy reduction vs RoundRobin: 22.24%
+- Energy reduction vs GWO: 7.71%
+- Energy reduction vs ACO: 2.76%
+- Carbon reduction vs RoundRobin: 22.24%
+- Carbon reduction vs GWO: 7.71%
+
+11) RLPA METHOD SUMMARY
+- Consolidation-first heuristic core.
+- Predictive inputs include queue pressure and renewable availability.
+- Adaptive placement strategy changes by workload pressure.
+- Hybrid scoring: 95% heuristic + 5% RL correction.
+- Deterministic inference mode used for reproducible comparisons.
+
+12) INTERPRETATION
+- RLPA is strongest when objective is sustainability (energy/carbon).
+- BestFit yields higher utilization but slightly higher energy than RLPA.
+- RoundRobin improves queue waiting but incurs major energy and migration cost.
+- ACO and GWO are competitive but do not outperform RLPA on energy/carbon.
+
+13) LIMITATION
+- SLA violation is very high for all algorithms (~94-95%).
+- Current SLA threshold appears stricter than job service-time distribution.
+- This reduces SLA metric discrimination across algorithms in current setup.
+
+14) CONCLUSION
+- Project delivers a complete green-cloud scheduling simulation framework.
+- RLPA is best performer for energy and carbon efficiency in benchmark scenario.
+- Equal throughput with reduced energy indicates practical sustainability gains.
+- Framework is suitable for further policy tuning and larger-scale studies.
+
+15) FUTURE WORK
+- Recalibrate SLA settings for better QoS discrimination.
+- Add multi-seed statistical significance testing.
+- Expand benchmark reporting for bursty and time-varying workloads.
+- Integrate dynamic real-world carbon intensity signals.
+- Scale to larger server clusters and richer trace datasets.
